@@ -37,5 +37,9 @@ for i in range(0, n):
         s.minimize(ycoords[i] - ycoords[j])
         s.minimize(ycoords[j] - ycoords[i])
 if(s.check() == sat):
-    print(s.model())
+     m = s.model()
+#    print(s.model())
 #    print(s.objectives())
+     print("\\begin{tikzpicture}")
+     for i in range(0, n):
+         print("\\node[shape=circle, draw=black] (" + str(i) + ") at (" + str(m.get_interp(xcoords[i])) + "," + str(m.get_interp(ycoords[i])) + ") {};")
