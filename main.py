@@ -43,3 +43,4 @@ if(s.check() == sat):
      print("\\begin{tikzpicture}")
      for i in range(0, n):
          print("\\node[shape=circle, draw=black] (" + str(i) + ") at (" + str(m.get_interp(xcoords[i])) + "," + str(m.get_interp(ycoords[i])) + ") {};")
+     print("\\end{tikzpicture}")
