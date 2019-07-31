@@ -12,7 +12,11 @@ def writeFile(path, contents):
     with open(path, "wt") as f:
         f.write(contents)
 
-circles = detect_circles("input.png", "output.png")
+if len(sys.argv) < 3:
+    print("Please enter valid input and output files.")
+    exit()
+
+circles = detect_circles(sys.argv[1], "output.png")
 s = Optimize()
 n = len(circles)
 xcoords = []
@@ -23,8 +27,6 @@ for x in range(0, n):
 for y in range(0, n):
     ycoords.append(Int("y_" + str(y)))
     s.add(ycoords[y] >= 0)
-#s.add(Sum(xcoords) < n ** 2)
-#s.add(Sum(ycoords) < n ** 2)
 for i in range(0, n):
     for j in range(i + 1, n):
         if(abs(circles[i][0] - circles[j][0]) < circles[i][2]):
@@ -39,12 +41,6 @@ for i in range(0, n):
             s.add(ycoords[i] < ycoords[j])
         else:
             s.add(ycoords[i] > ycoords[j])
-for i in range(0, n):
-    for j in range(i + 1, n):
-        s.minimize(xcoords[i] - xcoords[j])
-        s.minimize(xcoords[j] - xcoords[i])
-        s.minimize(ycoords[i] - ycoords[j])
-        s.minimize(ycoords[j] - ycoords[i])
 if(s.check() == sat):
      m = s.model()
      contents = "\\documentclass{article}\n"
@@ -55,5 +51,5 @@ if(s.check() == sat):
          contents += "\\node[shape=circle, draw=black] (" + str(i) + ") at (" + str(m.get_interp(xcoords[i])) + "," + str(m.get_interp(ycoords[i])) + ") {};\n"
      contents += "\\end{tikzpicture}\n"
      contents += "\\end{document}"
-     writeFile("result.tex", contents)
-     pdf_compile("result.tex")
+     writeFile(sys.argv[2], contents)
+     pdf_compile(sys.argv[2])
