@@ -2,6 +2,15 @@
 
 from circle import *
 from z3 import *
+from tex_compile import *
+
+def readFile(path):
+    with open(path, "rt") as f:
+        return f.read()
+
+def writeFile(path, contents):
+    with open(path, "wt") as f:
+        f.write(contents)
 
 circles = detect_circles("input.png", "output.png")
 s = Optimize()
@@ -38,9 +47,13 @@ for i in range(0, n):
         s.minimize(ycoords[j] - ycoords[i])
 if(s.check() == sat):
      m = s.model()
-#    print(s.model())
-#    print(s.objectives())
-     print("\\begin{tikzpicture}")
+     contents = "\\documentclass{article}\n"
+     contents += "\\usepackage{tikz}\n"
+     contents += "\\begin{document}\n"
+     contents += "\\begin{tikzpicture}\n"
      for i in range(0, n):
-         print("\\node[shape=circle, draw=black] (" + str(i) + ") at (" + str(m.get_interp(xcoords[i])) + "," + str(m.get_interp(ycoords[i])) + ") {};")
-     print("\\end{tikzpicture}")
+         contents += "\\node[shape=circle, draw=black] (" + str(i) + ") at (" + str(m.get_interp(xcoords[i])) + "," + str(m.get_interp(ycoords[i])) + ") {};\n"
+     contents += "\\end{tikzpicture}\n"
+     contents += "\\end{document}"
+     writeFile("result.tex", contents)
+     pdf_compile("result.tex")
