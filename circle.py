@@ -39,7 +39,7 @@ def detect_circles(input_file, output_file):
     for k, v in sorted(acc.items(), key=lambda i: -i[1]):
         x, y, r = k
         if v / steps >= threshold and all((x - xc) ** 2 + (y - yc) ** 2 > rc ** 2 for xc, yc, rc in circles):
-            print(v / steps, x, y, r)
+            #print(v / steps, x, y, r)
             circles.append((x, y, r))
 
     for x, y, r in circles:
