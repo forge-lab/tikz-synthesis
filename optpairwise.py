@@ -42,9 +42,9 @@ for i in range(0, n):
         if(abs(circles[i][1] - circles[j][1]) < circles[i][2]):
             s.add(ycoords[i] == ycoords[j])
         elif(circles[i][1] < circles[j][1]):
-            s.add(ycoords[i] < ycoords[j])
-        else:
             s.add(ycoords[i] > ycoords[j])
+        else:
+            s.add(ycoords[i] < ycoords[j])
 for i in range(0, n):
     for j in range(i + 1, n):
         s.minimize(z3abs(xcoords[i] - xcoords[j]))

@@ -38,9 +38,9 @@ for i in range(0, n):
         if(abs(circles[i][1] - circles[j][1]) < circles[i][2]):
             s.add(ycoords[i] == ycoords[j])
         elif(circles[i][1] < circles[j][1]):
-            s.add(ycoords[i] < ycoords[j])
-        else:
             s.add(ycoords[i] > ycoords[j])
+        else:
+            s.add(ycoords[i] < ycoords[j])
 if(s.check() == sat):
      m = s.model()
      contents = "\\documentclass{article}\n"
