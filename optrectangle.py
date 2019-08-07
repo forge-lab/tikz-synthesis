@@ -42,7 +42,7 @@ for i in range(0, n):
         else:
             s.add(ycoords[i] < ycoords[j])
 s.minimize(Sum(xcoords))
-#s.minimize(Sum(ycoords))
+s.minimize(Sum(ycoords))
 if(s.check() == sat):
      m = s.model()
      contents = "\\documentclass{article}\n"
